@@ -1,100 +1,82 @@
 # Creating A Calculator
 from tkinter import *
+
 def button_click(number):
-    # e.delete(0,END)
-    e.insert(END,number)
+    e.insert(END, number)
+
 def button_clear():
-    e.delete(0,END)
+    e.delete(0, END)
 
 def button_add():
-    first_number = e.get()
-    global f_num
-    global math
+    global f_num, math
+    f_num = float(e.get())
     math = "addition"
-    f_num = int(first_number)
-    e.delete(0,END)
+    e.delete(0, END)
 
 def button_equal():
-    second_number = e.get()
-    e.delete(0,END)
+    second_number = float(e.get())
+    e.delete(0, END)
+    
     if math == "addition":
-        e.insert(0,f_num + int(second_number))
-    if math == "subtraction":
-        e.insert(0,f_num - int(second_number))
-    if math == "multiplication":
-        e.insert(0,f_num * int(second_number))
-    if math == "division":
-        e.insert(0,f_num / int(second_number))
+        e.insert(0, f_num + second_number)
+    elif math == "subtraction":
+        e.insert(0, f_num - second_number)
+    elif math == "multiplication":
+        e.insert(0, f_num * second_number)
+    elif math == "division":
+        e.insert(0, f_num / second_number)
 
 def button_subtract():
-    first_number = e.get()
-    global f_num
-    global math
+    global f_num, math
+    f_num = float(e.get())
     math = "subtraction"
-    f_num = int(first_number)
     e.delete(0, END)
-    return
 
 def button_multiply():
-    first_number = e.get()
-    global f_num
-    global math
+    global f_num, math
+    f_num = float(e.get())
     math = "multiplication"
-    f_num = int(first_number)
     e.delete(0, END)
-    return
 
 def button_divide():
-    first_number = e.get()
-    global f_num
-    global math
+    global f_num, math
+    f_num = float(e.get())
     math = "division"
-    f_num = int(first_number)
     e.delete(0, END)
-    return
 
 root = Tk()
 root.title("Calculator")
 root.configure(bg="black")
 
-e = Entry(root, width=35,borderwidth=5,fg="Cyan",bg="Black")
-e.grid(row=0,column=0,columnspan=5,padx=10,pady=10)
 
-button_1 = Button(root,text="1",padx=20,pady=10,fg="Cyan",bg="Black",command=lambda: button_click(1))
-button_2 = Button(root,text="2",padx=20,pady=10,fg="Cyan",bg="Black",command=lambda: button_click(2))
-button_3 = Button(root,text="3",padx=20,pady=10,fg="Cyan",bg="Black",command=lambda: button_click(3))
-button_4 = Button(root,text="4",padx=20,pady=10,fg="Cyan",bg="Black",command=lambda: button_click(4))
-button_5 = Button(root,text="5",padx=20,pady=10,fg="Cyan",bg="Black",command=lambda: button_click(5))
-button_6 = Button(root,text="6",padx=20,pady=10,fg="Cyan",bg="Black",command=lambda: button_click(6))
-button_7 = Button(root,text="7",padx=20,pady=10,fg="Cyan",bg="Black",command=lambda: button_click(7))
-button_8 = Button(root,text="8",padx=20,pady=10,fg="Cyan",bg="Black",command=lambda: button_click(8))
-button_9 = Button(root,text="9",padx=20,pady=10,fg="Cyan",bg="Black",command=lambda: button_click(9))
-button_0 = Button(root,text="0",padx=20,pady=10,fg="Cyan",bg="Black",command=lambda: button_click(0))
+e = Entry(root, width=35, borderwidth=5, fg="white", bg="black", font=("Arial", 14))
+e.grid(row=0, column=0, columnspan=4, padx=10, pady=10)
 
-button_add = Button(root,text="+",padx=20,pady=10,fg="Cyan",bg="Black",command=button_add)
-button_equal = Button(root,text="=",padx=20,pady=10,fg="Cyan",bg="Black",command=button_equal)
-button_clear = Button(root,text="Clear",padx=20,pady=10,fg="Cyan",bg="Black",command=button_clear)
-button_subtract = Button(root,text="-",padx=20,pady=10,fg="Cyan",bg="Black",command=button_subtract)
-button_multiply = Button(root,text="*",padx=20,pady=10,fg="Cyan",bg="Black",command=button_multiply)
-button_divide = Button(root,text="/",padx=20,pady=10,fg="Cyan",bg="Black",command=button_divide)
+# Define button properties
+btn_config = {"padx": 20, "pady": 10, "fg": "cyan", "bg": "black", "font": ("Arial", 12)}
 
+# Create buttons
+buttons = [
+    ('7', 1, 0), ('8', 1, 1), ('9', 1, 2), ('/', 1, 3),
+    ('4', 2, 0), ('5', 2, 1), ('6', 2, 2), ('*', 2, 3),
+    ('1', 3, 0), ('2', 3, 1), ('3', 3, 2), ('-', 3, 3),
+    ('0', 4, 0), ('C', 4, 1), ('=', 4, 2), ('+', 4, 3)
+]
 
-button_1.grid(row=3,column=0)
-button_2.grid(row=3,column=1)
-button_3.grid(row=3,column=2)
-button_4.grid(row=2,column=0)
-button_5.grid(row=2,column=1)
-button_6.grid(row=2,column=2)
-button_7.grid(row=1,column=0)
-button_8.grid(row=1,column=1)
-button_9.grid(row=1,column=2)
-button_0.grid(row=4,column=0)
-
-button_clear.grid(row=4,column=1)
-button_add.grid(row=4,column=3)
-button_equal.grid(row=4,column=2)
-button_subtract.grid(row=3,column=3)
-button_multiply.grid(row=2,column=3)
-button_divide.grid(row=1,column=3)
+for (text, row, col) in buttons:
+    if text.isdigit():
+        Button(root, text=text, command=lambda t=text: button_click(t), **btn_config).grid(row=row, column=col)
+    elif text == "C":
+        Button(root, text=text, command=button_clear, **btn_config).grid(row=row, column=col)
+    elif text == "=":
+        Button(root, text=text, command=button_equal, **btn_config).grid(row=row, column=col)
+    elif text == "+":
+        Button(root, text=text, command=button_add, **btn_config).grid(row=row, column=col)
+    elif text == "-":
+        Button(root, text=text, command=button_subtract, **btn_config).grid(row=row, column=col)
+    elif text == "*":
+        Button(root, text=text, command=button_multiply, **btn_config).grid(row=row, column=col)
+    elif text == "/":
+        Button(root, text=text, command=button_divide, **btn_config).grid(row=row, column=col)
 
 root.mainloop()
